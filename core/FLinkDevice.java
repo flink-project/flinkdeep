@@ -46,7 +46,6 @@ public class FLinkDevice implements FLinkDefinitions{
 		FLinkSubDevice actualDevice = firstDevice;
 		
 		while (memptr < busInterface.getMemoryLength()){
-			System.out.println(memptr);
 			numberOfSubdevices++;
 			
 			actualDevice.setBaseAddress(memptr);
@@ -65,6 +64,7 @@ public class FLinkDevice implements FLinkDefinitions{
 			//address of next subdevice
 			memptr = memptr + actualDevice.getMemSize();
 			
+			//create new device
 			if(memptr < busInterface.getMemoryLength()){
 				FLinkSubDevice nextDevice = new FLinkSubDevice();
 				actualDevice.setNextSubdevice(nextDevice);
@@ -92,6 +92,8 @@ public class FLinkDevice implements FLinkDefinitions{
 			return "WD";
 		case PPWA_INTERFACE_ID:
 			return "PPWA";
+		case ANALOG_INPUT_INTERFACE_ID:
+			return "ANALOG INPUT";
 		default:
 			return Integer.toString(id);
 		}

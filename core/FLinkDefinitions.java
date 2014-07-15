@@ -16,11 +16,13 @@ public interface FLinkDefinitions {
 	public static final int MOD_CONF_OFFSET = 0x14;
 	
 	
-	public static final int PWM_INTERFACE_ID		=	0xC;	
-	public static final int GPIO_INTERFACE_ID		=	0x5;
-	public static final int COUNTER_INTERFACE_ID	=	0x6;	
-	public static final int WD_INTERFACE_ID			=	0x10;	
-	public static final int PPWA_INTERFACE_ID		=	0xD;	
+	public static final int PWM_INTERFACE_ID			=	0xC;	
+	public static final int GPIO_INTERFACE_ID			=	0x5;
+	public static final int COUNTER_INTERFACE_ID		=	0x6;	
+	public static final int WD_INTERFACE_ID				=	0x10;	
+	public static final int PPWA_INTERFACE_ID			=	0xD;	
+	public static final int ANALOG_INPUT_INTERFACE_ID 	= 0x1;
+	
 	
 	public static final int INTERFACE_TYPE_MASK = 0xFFFF;
 
