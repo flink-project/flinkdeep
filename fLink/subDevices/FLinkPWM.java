@@ -41,7 +41,9 @@ public class FLinkPWM implements FLinkDefinitions{
 	}
 	
 	public void setFrequency(int chanel, int frequency){
-		this.setPeriodTime(chanel,this.getBaseClock()/frequency);
+		if(frequency > 0){
+			this.setPeriodTime(chanel,this.getBaseClock()/frequency);
+		}
 	}
 	
 	public void setHighTime(int chanel, int period){

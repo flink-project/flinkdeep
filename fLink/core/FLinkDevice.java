@@ -38,6 +38,10 @@ public class FLinkDevice implements FLinkDefinitions{
 		return null;
 	}
 	
+	public FLinkSubDevice getSubdeviceByType(int type){
+		return getSubdeviceByType(type,0);
+	}
+	
 	
 	private void findSubdevices(){
 		int memptr = 0;
