@@ -8,7 +8,8 @@ import fLink.core.FLinkBusInterface;
 
 public class SPIBusInterface implements FLinkBusInterface, IphyCoreMpc5200tiny{
 
-	private int memLength = 0;
+	private int memLength ;
+	private boolean infoDevice;
 	
 
 	private static final int SPICR1 = MBAR + 0x0F00;
@@ -19,7 +20,8 @@ public class SPIBusInterface implements FLinkBusInterface, IphyCoreMpc5200tiny{
 	private static final int SPIPORT = MBAR + 0x0F0D;
 	private static final int SPIDATADIR = MBAR + 0x0F10;	
 	
-	public SPIBusInterface(int memoryLength){
+	
+	public SPIBusInterface(){
 		int gpspcr = US.GET4(GPSPCR);
 		gpspcr = gpspcr & 0xCFFFF0FF; //Clean ALTs bits
 		gpspcr = gpspcr | 0x00000C00;// use pins on PCS3 for SPI and UART
@@ -29,8 +31,15 @@ public class SPIBusInterface implements FLinkBusInterface, IphyCoreMpc5200tiny{
 		US.PUT1(SPIBDRATE, 0x74);
 		US.PUT1(SPIDATADIR, 0xE); // enable CS
 		US.GET1(SPIST); // clear st
-		
+		this.memLength = 0;
+		this.infoDevice = true;
+	}
+	
+	
+	public SPIBusInterface(int memoryLength){
+		this();
 		this.memLength = memoryLength;
+		this.infoDevice = false;
 	}
 	
 	public int getMemoryLength() {
@@ -72,6 +81,10 @@ public class SPIBusInterface implements FLinkBusInterface, IphyCoreMpc5200tiny{
 		result =  result | ((((int)dataToSend[10])&0xFF) << 8);
 		result =  result | (((int)dataToSend[11])&0xFF);
 		return result;
+	}
+
+	public boolean hasInfoDev() {
+		return infoDevice;
 	}
 	
 }

@@ -8,6 +8,7 @@ public class FLinkSubDevice implements FLinkDefinitions{
 	private int memSize;
 	private int chanels;
 	private int baseAddress;
+	private int uniceID;
 	private FLinkBusInterface busInterface; 
 	
 	
@@ -30,6 +31,10 @@ public class FLinkSubDevice implements FLinkDefinitions{
 	
 	public void setMemSize(int size){
 		this.memSize = size;
+	}
+	
+	public void setUniceID(int uniceID){
+		this.uniceID = uniceID;
 	}
 	
 	public void setChanels(int chanels){
@@ -66,6 +71,10 @@ public class FLinkSubDevice implements FLinkDefinitions{
 
 	public int getNumberOfChanels() {
 		return this.chanels;
+	}
+	
+	public int getUniceID() {
+		return this.uniceID;
 	}
 	
 	public int read(int address){

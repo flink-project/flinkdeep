@@ -38,6 +38,16 @@ public class FLinkDevice implements FLinkDefinitions{
 		return null;
 	}
 	
+	public FLinkSubDevice getSubdeviceByUniceID(int id){
+		for(int i = 0; i <list.length;i++){
+			if(list[i].getUniceID() == id){
+				return list[i];
+			}
+		}
+		return null;
+	}
+	
+	
 	public FLinkSubDevice getSubdeviceByType(int type){
 		return getSubdeviceByType(type,0);
 	}
@@ -46,12 +56,20 @@ public class FLinkDevice implements FLinkDefinitions{
 	private void findSubdevices(){
 		int memptr = 0;
 		int numberOfSubdevices = 0;
+		int deciceLength = 0;
 		FLinkSubDevice firstDevice = new FLinkSubDevice();
 		FLinkSubDevice actualDevice = firstDevice;
+		if(busInterface.hasInfoDev()){
+			deciceLength = busInterface.read(memptr + TOTAL_HEADER_SIZE); //device size register
+		}else{
+			deciceLength = busInterface.getMemoryLength();
+		}
 		
-		while (memptr < busInterface.getMemoryLength()){
+		
+		
+		
+		while (memptr < deciceLength){
 			numberOfSubdevices++;
-			
 			actualDevice.setBaseAddress(memptr);
 			actualDevice.setBusInterface(busInterface);
 			
@@ -64,12 +82,14 @@ public class FLinkDevice implements FLinkDefinitions{
 			actualDevice.setMemSize(busInterface.read(memptr + SIZE_OFFSET));
 			//number of channels register
 			actualDevice.setChanels(busInterface.read(memptr + CHANEL_OFFSET));
+			//unice id
+			actualDevice.setUniceID(busInterface.read(memptr + UNIC_ID_OFFSET));
 			
 			//address of next subdevice
 			memptr = memptr + actualDevice.getMemSize();
 			
 			//create new device
-			if(memptr < busInterface.getMemoryLength()){
+			if(memptr < deciceLength){
 				FLinkSubDevice nextDevice = new FLinkSubDevice();
 				actualDevice.setNextSubdevice(nextDevice);
 				actualDevice = nextDevice;
@@ -98,6 +118,10 @@ public class FLinkDevice implements FLinkDefinitions{
 			return "PPWA";
 		case ANALOG_INPUT_INTERFACE_ID:
 			return "ANALOG INPUT";
+		case ANALOG_OUTPUT_INTERFACE_ID:
+			return "ANALOG OUTPUT";
+		case INFO_DEVICE_ID:
+			return "INFO DEVICE";
 		default:
 			return Integer.toString(id);
 		}

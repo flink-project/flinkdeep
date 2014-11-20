@@ -11,15 +11,24 @@ public class localPlusBusInterface implements FLinkBusInterface, IphyCoreMpc5200
 	private static final int CS3STOPADDRESSS =  0xe1FF0000;
 	
 	private int memLength;
+	private boolean infoDevice;
 
-	public localPlusBusInterface(int memoryLength){
-		this.memLength = memoryLength;
+	public localPlusBusInterface(){
 		US.PUT4(CS3START, CS3STARTADDRESS>>16); //set CS3 start address
 		US.PUT4(CS3STOP, CS3STOPADDRESSS>>16); 	//set CS3 end address
 		US.PUT4(CS3CR, 0x0005FF00);	//configure CS3
 		int ipbiReg = US.GET4(IPBICR);
 		ipbiReg = ipbiReg | 0x00080000; //enable CS3
 		US.PUT4(IPBICR, ipbiReg);
+		infoDevice = true;
+		memLength = 0;
+	}
+	
+	
+	public localPlusBusInterface(int memoryLength){
+		this();
+		this.memLength = memoryLength;
+		infoDevice = false;
 	}
 
 	public int getMemoryLength() {
@@ -33,6 +42,11 @@ public class localPlusBusInterface implements FLinkBusInterface, IphyCoreMpc5200
 	
 	public void write(int address, int data) {	
 		US.PUT4(CS3STARTADDRESS+address, data);
+	}
+
+
+	public boolean hasInfoDev() {
+		return infoDevice;
 	}
 
 }

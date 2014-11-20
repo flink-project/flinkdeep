@@ -21,5 +21,11 @@ public interface  FLinkBusInterface {
 	 * @param data to write
 	 */
 	public void write (int address, int data);
+	
+	/**
+	 * 
+	 * @return True if device has Info device
+	 */
+	public boolean hasInfoDev();
 
 }
