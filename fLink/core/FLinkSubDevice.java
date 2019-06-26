@@ -11,7 +11,10 @@ public class FLinkSubDevice implements FLinkDefinitions{
 	private int uniceID;
 	private FLinkBusInterface busInterface; 
 	
-	
+	public FLinkSubDevice() {
+		System.out.println("FLinkSubDevice constr.");
+		
+	}
 	
 	public void setNextSubdevice(FLinkSubDevice next){
 		this.next = next;

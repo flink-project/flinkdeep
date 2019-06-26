@@ -5,8 +5,8 @@ import fLink.core.FLinkSubDevice;
 
 public class FLinkWatchdog implements FLinkDefinitions{
 	private static int BASE_CLOCK_ADDRESS = 0;
-	private static int STATUS_CONF_ADDRESS = BASE_CLOCK_ADDRESS + REGISTER_WITH;
-	private static int COUNTER_ADDRESS = STATUS_CONF_ADDRESS + REGISTER_WITH;
+	private static int STATUS_CONF_ADDRESS = BASE_CLOCK_ADDRESS + REGISTER_WIDTH;
+	private static int COUNTER_ADDRESS = STATUS_CONF_ADDRESS + REGISTER_WIDTH;
 	private static int STATUS_BIT_MASK = 0x1;
 	private static int REARM_BIT_MASK = 0x2;
 	public FLinkSubDevice dev;

@@ -1,10 +1,13 @@
 package fLink.core;
 
+import fLink.busInterfaces.AXI.AXIInterface;
+
 public class FLinkDevice implements FLinkDefinitions{
 	private FLinkBusInterface busInterface;
 	private FLinkSubDevice list[];
+
 	
-	public FLinkDevice(FLinkBusInterface busInterface){
+	public FLinkDevice(FLinkBusInterface busInterface){		
 		this.busInterface = busInterface;
 		findSubdevices();
 	}
@@ -56,19 +59,22 @@ public class FLinkDevice implements FLinkDefinitions{
 	private void findSubdevices(){
 		int memptr = 0;
 		int numberOfSubdevices = 0;
-		int deciceLength = 0;
+		int deviceLength = 0;
 		FLinkSubDevice firstDevice = new FLinkSubDevice();
 		FLinkSubDevice actualDevice = firstDevice;
 		if(busInterface.hasInfoDev()){
-			deciceLength = busInterface.read(memptr + TOTAL_HEADER_SIZE); //device size register
+			deviceLength = busInterface.read(memptr + TOTAL_HEADER_SIZE); //device size register
 		}else{
-			deciceLength = busInterface.getMemoryLength();
+			System.out.println("no info device");
+			deviceLength = busInterface.getMemoryLength();
 		}
 		
 		
 		
 		
-		while (memptr < deciceLength){
+		while (memptr < deviceLength){
+			System.out.print("memptr: ");
+			System.out.printHexln(memptr);
 			numberOfSubdevices++;
 			actualDevice.setBaseAddress(memptr);
 			actualDevice.setBusInterface(busInterface);
@@ -81,15 +87,15 @@ public class FLinkDevice implements FLinkDefinitions{
 			//memory size register
 			actualDevice.setMemSize(busInterface.read(memptr + SIZE_OFFSET));
 			//number of channels register
-			actualDevice.setChanels(busInterface.read(memptr + CHANEL_OFFSET));
+			actualDevice.setChanels(busInterface.read(memptr + CHANNEL_OFFSET));
 			//unice id
-			actualDevice.setUniceID(busInterface.read(memptr + UNIC_ID_OFFSET));
+			actualDevice.setUniceID(busInterface.read(memptr + UNIQUE_ID_OFFSET));
 			
 			//address of next subdevice
 			memptr = memptr + actualDevice.getMemSize();
 			
 			//create new device
-			if(memptr < deciceLength){
+			if(memptr < deviceLength){
 				FLinkSubDevice nextDevice = new FLinkSubDevice();
 				actualDevice.setNextSubdevice(nextDevice);
 				actualDevice = nextDevice;
@@ -127,8 +133,6 @@ public class FLinkDevice implements FLinkDefinitions{
 		}
 		
 	}
-	
-	
 	
 	
 }

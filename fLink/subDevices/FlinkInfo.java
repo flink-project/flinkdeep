@@ -5,7 +5,7 @@ import fLink.core.FLinkSubDevice;
 
 public class FlinkInfo implements FLinkDefinitions{
 	private static int DEV_SIZE_ADDRESS = 0;
-	private static int NAME_0_ADDRESS = DEV_SIZE_ADDRESS + REGISTER_WITH;
+	private static int NAME_0_ADDRESS = DEV_SIZE_ADDRESS + REGISTER_WIDTH;
 	private static int NUBER_OF_NAME_REG = 7;
 	public FLinkSubDevice dev;
 	
@@ -20,7 +20,7 @@ public class FlinkInfo implements FLinkDefinitions{
 	public byte[] getName(){
 		byte result[] = new byte[NUBER_OF_NAME_REG*4];
 		for(int i = 0; i<NUBER_OF_NAME_REG;i++){
-			int reg = dev.read(NAME_0_ADDRESS+i*REGISTER_WITH);
+			int reg = dev.read(NAME_0_ADDRESS+i*REGISTER_WIDTH);
 			System.out.printHexln(reg);
 			result[result.length-(i*4)-1] = (byte) (reg);
 			result[result.length-(i*4)-2] = (byte) (reg>>8);

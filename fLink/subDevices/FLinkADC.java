@@ -5,7 +5,7 @@ import fLink.core.FLinkSubDevice;
 
 public class FLinkADC implements FLinkDefinitions{
 	private static int RESOLUTION_ADDRESS = 0;
-	private static int VALUE_0_ADDRESS = RESOLUTION_ADDRESS + REGISTER_WITH;
+	private static int VALUE_0_ADDRESS = RESOLUTION_ADDRESS + REGISTER_WIDTH;
 	public FLinkSubDevice dev;
 	private int resolution;
 	private int bit_mask;
@@ -26,7 +26,7 @@ public class FLinkADC implements FLinkDefinitions{
 	
 	public int getValue(int chanel){
 		if(chanel<dev.getNumberOfChanels()){
-			return (dev.read(VALUE_0_ADDRESS+chanel*REGISTER_WITH)&bit_mask);
+			return (dev.read(VALUE_0_ADDRESS+chanel*REGISTER_WIDTH)&bit_mask);
 		}else{
 			return 0;
 		}

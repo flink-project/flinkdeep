@@ -14,7 +14,7 @@ public class FLinkCounter implements FLinkDefinitions{
 	}
 	
 	public int getCountValue(int chanel){
-		return dev.read(COUNT_0_ADRESS + chanel*REGISTER_WITH);
+		return dev.read(COUNT_0_ADRESS + chanel*REGISTER_WIDTH);
 	}
 	
 	public void reset(){

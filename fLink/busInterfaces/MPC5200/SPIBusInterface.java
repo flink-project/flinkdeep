@@ -6,7 +6,7 @@ import fLink.core.FLinkBusInterface;
 
 //Altera spi to avalon bridge example c code is used for this interface. 
 
-public class SPIBusInterface implements FLinkBusInterface, IphyCoreMpc5200tiny{
+public class SPIBusInterface extends FLinkBusInterface implements IphyCoreMpc5200tiny{
 
 	private int memLength ;
 	private boolean infoDevice;
